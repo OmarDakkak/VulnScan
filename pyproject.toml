@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vulnscan"
+version = "1.0.0"
+description = "Smart Ethical Vulnerability Scanner for IP-based websites"
+authors = [{name = "Omar DAKKAK", email = "omardakkak98@gmail.com"}]
+license = {text = "GNU GENERAL PUBLIC LICENSE v3.0"}
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "requests>=2.31.0",
+    "click>=8.1.0",
+    "colorama>=0.4.6",
+    "python-nmap>=0.7.1",
+    "scapy>=2.5.0",
+    "ipaddress>=1.0.23",
+    "validators>=0.22.0",
+    "tabulate>=0.9.0",
+    "tqdm>=4.66.0",
+    "dnspython>=2.4.0",
+    "beautifulsoup4>=4.12.0",
+    "urllib3>=2.0.0"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/OmarDakkak/VulnScan"
+"Bug Tracker" = "https://github.com/OmarDakkak/VulnScan/issues"
+
+[project.scripts]
+vulnscan = "vulnscan.cli:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "black>=23.0",
+    "flake8>=6.0",
+    "mypy>=1.0",
+    "isort>=5.12.0",
+    "pytest-cov>=4.1.0"
+]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
