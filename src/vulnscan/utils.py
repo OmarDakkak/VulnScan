@@ -22,9 +22,12 @@ def print_banner():
     print(f"{Fore.YELLOW}Use only on systems you own or have permission to test!{Style.RESET_ALL}")
 
 def check_http(ip: str, port: int) -> bool:
-    """Check if an HTTP service is running on the given IP and port"""
+    """Check if an HTTP or HTTPS service is running on the given IP and port"""
     try:
-        url = f"http://{ip}:{port}/"
+        scheme = "http"
+        if port in (443, 8443):
+            scheme = "https"
+        url = f"{scheme}://{ip}:{port}/"
         resp = requests.get(url, timeout=3, verify=False)
         return resp.status_code < 500
     except Exception:
@@ -33,7 +36,10 @@ def check_http(ip: str, port: int) -> bool:
 def check_directory_listing(ip: str, port: int) -> bool:
     """Check for directory listing vulnerability"""
     try:
-        url = f"http://{ip}:{port}/"
+        scheme = "http"
+        if port in (443, 8443):
+            scheme = "https"
+        url = f"{scheme}://{ip}:{port}/"
         resp = requests.get(url, timeout=3, verify=False)
         if "Index of /" in resp.text:
             return True
